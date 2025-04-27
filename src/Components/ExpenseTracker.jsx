@@ -98,9 +98,15 @@ function ExpenseTracker() {
             <motion.div
                 key={exp.id}
                 layout
-                initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                // layoutTransition={{ type: "spring", stiffness: 500, damping: 30 }}
+                initial={{ opacity: 0, y: -15, filter: "blur(10px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                exit={{ opacity: 0, y: 10,filter: "blur(10px)" }}
+                whileHover={{
+                    scale: 1.02,
+                    y: -2,
+                    transition: { duration: 0.1, ease: "easeOut" },
+                }}
                 transition={{ duration: 0.3 }}
                 className="flex justify-between items-center px-2 group hover:bg-gray-200 transition duration-300 rounded-lg p-2"
             >
