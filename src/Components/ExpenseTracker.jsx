@@ -93,31 +93,34 @@ function ExpenseTracker() {
 
       {/* Expense List */}
       <div className="space-y-2 w-full">
-        <AnimatePresence>
-          {expenses.map((exp) => (
+        <motion.div layout>
+            {expenses.map((exp) => (
             <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter : "blur(0px)"}}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
-              className="flex justify-between items-center px-2 group hover:bg-gray-200 transition duration-300 rounded-lg p-2"
+                key={exp.id}
+                layout
+                initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                transition={{ duration: 0.3 }}
+                className="flex justify-between items-center px-2 group hover:bg-gray-200 transition duration-300 rounded-lg p-2"
             >
-              <span>{exp.title}</span>
+                <span>{exp.title}</span>
 
-              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
                 <span>{exp.amount} INR</span>
                 <button
-                  onClick={() => handleDelete(exp.id)}
-                  className="text-red-500 opacity-0 group-hover:opacity-100 hover:text-red-700 transition-opacity duration-200"
+                    onClick={() => handleDelete(exp.id)}
+                    className="text-red-500 opacity-0 group-hover:opacity-100 hover:text-red-700 transition-opacity duration-200"
                 >
-                  <Trash2 size={18} />
+                    <Trash2 size={18} />
                 </button>
-              </div>
+                </div>
             </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+            ))}
+        </motion.div>
+</div>
+
+
     </div>
   );
 }
