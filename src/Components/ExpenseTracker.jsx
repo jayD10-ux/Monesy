@@ -112,7 +112,7 @@ function ExpenseTracker() {
             >
               <span>{exp.title}</span>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-right">
                 <span>{exp.amount} INR</span>
                 <button
                   onClick={() => handleDelete(exp.id)}
@@ -125,12 +125,15 @@ function ExpenseTracker() {
           ))}
         </motion.div>
         <div className="sticky bottom-0 bg-gray-100 pt-4">
-          <div className="border-t border-dotted border-gray-400 my-2"></div>
-          <div className="flex justify-between items-center py-2">
+          <div className="border-t border-dashed border-gray-400 my-2"></div>
+          <div className="flex justify-between items-center px-2 py-2">
             <span className="font-semibold">Total</span>
-            <span className="font-bold">
-              {expenses.reduce((sum, exp) => sum + exp.amount, 0)} INR
-            </span>
+            <div className="flex items-center gap-1 text-right">
+              <span className="font-bold">
+                {expenses.reduce((sum, exp) => sum + exp.amount, 0)} INR
+              </span>
+              <div className="w-5 h-5"></div>{" "}
+            </div>
           </div>
         </div>
       </div>
