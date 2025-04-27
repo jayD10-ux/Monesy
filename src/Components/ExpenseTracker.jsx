@@ -80,7 +80,7 @@ function ExpenseTracker() {
               key="add-button"
               onClick={handleAdd}
               className="ml-2 text-white bg-black rounded-full w-10 h-10 flex items-center justify-center leading-none"
-              initial={{ opacity: 0, scale: 0.5 , x: -20, filter: "blur(10px)" }}
+              initial={{ opacity: 0, scale: 0.5, x: -20, filter: "blur(10px)" }}
               animate={{ opacity: 1, scale: 1, x: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 0.5, x: -20, filter: "blur(10px)" }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -94,39 +94,46 @@ function ExpenseTracker() {
       {/* Expense List */}
       <div className="space-y-2 w-full">
         <motion.div layout>
-            {expenses.map((exp) => (
+          {expenses.map((exp) => (
             <motion.div
-                key={exp.id}
-                layout
-                // layoutTransition={{ type: "spring", stiffness: 500, damping: 30 }}
-                initial={{ opacity: 0, y: -15, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: 10,filter: "blur(10px)" }}
-                whileHover={{
-                    scale: 1.02,
-                    y: -2,
-                    transition: { duration: 0.1, ease: "easeOut" },
-                }}
-                transition={{ duration: 0.3 }}
-                className="flex justify-between items-center px-2 group hover:bg-gray-200 transition duration-300 rounded-lg p-2"
+              key={exp.id}
+              layout
+              // layoutTransition={{ type: "spring", stiffness: 500, damping: 30 }}
+              initial={{ opacity: 0, y: -15, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+              whileHover={{
+                scale: 1.02,
+                y: -2,
+                transition: { duration: 0.1, ease: "easeOut" },
+              }}
+              transition={{ duration: 0.3 }}
+              className="flex justify-between items-center px-2 group hover:bg-gray-200 transition duration-300 rounded-lg p-2"
             >
-                <span>{exp.title}</span>
+              <span>{exp.title}</span>
 
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <span>{exp.amount} INR</span>
                 <button
-                    onClick={() => handleDelete(exp.id)}
-                    className="text-red-500 opacity-0 group-hover:opacity-100 hover:text-red-700 transition-opacity duration-200"
+                  onClick={() => handleDelete(exp.id)}
+                  className="text-red-500 opacity-0 group-hover:opacity-100 hover:text-red-700 transition-opacity duration-200"
                 >
-                    <Trash2 size={18} />
+                  <Trash2 size={18} />
                 </button>
-                </div>
+              </div>
             </motion.div>
-            ))}
+          ))}
         </motion.div>
-</div>
-
-
+        <div className="sticky bottom-0 bg-gray-100 pt-4">
+          <div className="border-t border-dotted border-gray-400 my-2"></div>
+          <div className="flex justify-between items-center py-2">
+            <span className="font-semibold">Total</span>
+            <span className="font-bold">
+              {expenses.reduce((sum, exp) => sum + exp.amount, 0)} INR
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
