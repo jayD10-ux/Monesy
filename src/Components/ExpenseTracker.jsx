@@ -5,11 +5,33 @@ import { motion, AnimatePresence } from "framer-motion";
 function ExpenseTracker() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
+  const [displayAmount, setDisplayAmount] = useState(0);
   const [expenses, setExpenses] = useState([]);
   const ghostRef = useRef(null);
-  const [inputWidth, setInputWidth] = useState(60); // Initial width
+  const [inputWidth, setInputWidth] = useState(60);
   const [titleisFocused, setTitleIsFocused] = useState(false);
   const [amountisFocused, setAmountIsFocused] = useState(false);
+
+  useEffect(() => {
+    const target = parseFloat(amount) || 0;
+    let start = displayAmount;
+    const duration = 300; // ms
+    const frameRate = 1000 / 60; // 60 FPS
+    const totalFrames = duration / frameRate;
+    let currentFrame = 0;
+
+    const counter = setInterval(() => {
+      currentFrame++;
+      const progress = currentFrame / totalFrames;
+      const value = start + (target - start) * progress;
+      setDisplayAmount(Math.round(value));
+      if (currentFrame === totalFrames) {
+        clearInterval(counter);
+      }
+    }, frameRate);
+
+    return () => clearInterval(counter);
+  }, [amount]);
 
   useEffect(() => {
     if (ghostRef.current) {
@@ -48,7 +70,7 @@ function ExpenseTracker() {
         className="bg-transparent w-full outline-none text-center text-black placeholder-gray-400 text-sm font-medium"
       />
 
-      {/* Ghost span (measuring number width) */}
+      {/* Ghost span (for measuring number width) */}
       <div className="absolute top-[-9999px] left-[-9999px] text-6xl font-bold whitespace-pre pointer-events-none">
         <span ref={ghostRef}>{amount || "0"}</span>
       </div>
@@ -60,15 +82,13 @@ function ExpenseTracker() {
           placeholder={amountisFocused ? "" : "0"}
           onFocus={() => setAmountIsFocused(true)}
           onBlur={() => setAmountIsFocused(false)}
-          value={amount}
+          value={amountisFocused ? amount : displayAmount}
           onChange={(e) => setAmount(e.target.value)}
           className="text-6xl font-bold text-center outline-none bg-transparent px-1"
-          animate={{
-            width: inputWidth,
-          }}
+          style={{ minWidth: 60 }}
+          animate={{ width: inputWidth }}
           initial={false}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          style={{ minWidth: 60 }}
         />
 
         {/* INR Label */}
@@ -99,7 +119,6 @@ function ExpenseTracker() {
             <motion.div
               key={exp.id}
               layout
-              // layoutTransition={{ type: "spring", stiffness: 500, damping: 30 }}
               initial={{ opacity: 0, y: -15, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: 10, filter: "blur(10px)" }}
@@ -112,7 +131,6 @@ function ExpenseTracker() {
               className="flex justify-between items-center px-2 group hover:bg-gray-200 transition duration-300 rounded-lg p-2"
             >
               <span>{exp.title}</span>
-
               <div className="flex items-center gap-2 text-right">
                 <span>{exp.amount} INR</span>
                 <button
@@ -125,6 +143,8 @@ function ExpenseTracker() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Total Block */}
         <AnimatePresence>
           {expenses.length > 1 && (
             <motion.div
@@ -143,8 +163,7 @@ function ExpenseTracker() {
                   <span className="font-bold">
                     {expenses.reduce((sum, exp) => sum + exp.amount, 0)} INR
                   </span>
-                  <div className="w-5 h-5 opacity-0"></div>{" "}
-                  {/* Invisible dummy for alignment */}
+                  <div className="w-5 h-5 opacity-0"></div>
                 </div>
               </div>
             </motion.div>
