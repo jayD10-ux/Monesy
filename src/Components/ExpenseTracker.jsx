@@ -14,7 +14,7 @@ function ExpenseTracker() {
   useEffect(() => {
     if (ghostRef.current) {
       const ghostWidth = ghostRef.current.offsetWidth;
-      setInputWidth(Math.max(ghostWidth + 20, 60)); // 20px padding
+      setInputWidth(Math.max(ghostWidth + 20, 60));
     }
   }, [amount]);
 
@@ -35,7 +35,8 @@ function ExpenseTracker() {
   };
 
   return (
-    <div className="p-8 w-full max-w-md mx-auto flex flex-col items-center space-y-8">
+    <div className="p-8 w-full max-w-md mx-auto flex flex-col items-center mb-8">
+
       {/* Title input */}
       <input
         type="text"
@@ -53,7 +54,7 @@ function ExpenseTracker() {
       </div>
 
       {/* Amount input + INR + Add button */}
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-4 mb-4">
         <motion.input
           type="number"
           placeholder={amountisFocused ? "" : "0"}
@@ -136,7 +137,7 @@ function ExpenseTracker() {
               className="sticky bottom-0 bg-gray-100 pt-4"
             >
               <div className="border-t border-dashed border-gray-400 my-2"></div>
-              <div className="flex justify-between items-center px-2 py-2">
+              <div className="flex justify-between items-center px-1 py-2">
                 <span className="font-semibold">Total</span>
                 <div className="flex items-center gap-2 text-right">
                   <span className="font-bold">
