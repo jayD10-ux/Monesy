@@ -124,18 +124,30 @@ function ExpenseTracker() {
             </motion.div>
           ))}
         </motion.div>
-        <div className="sticky bottom-0 bg-gray-100 pt-4">
-          <div className="border-t border-dashed border-gray-400 my-2"></div>
-          <div className="flex justify-between items-center px-2 py-2">
-            <span className="font-semibold">Total</span>
-            <div className="flex items-center gap-1 text-right">
-              <span className="font-bold">
-                {expenses.reduce((sum, exp) => sum + exp.amount, 0)} INR
-              </span>
-              <div className="w-5 h-5"></div>{" "}
-            </div>
-          </div>
-        </div>
+        <AnimatePresence>
+          {expenses.length > 1 && (
+            <motion.div
+              key="total-block"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="sticky bottom-0 bg-gray-100 pt-4"
+            >
+              <div className="border-t border-dashed border-gray-400 my-2"></div>
+              <div className="flex justify-between items-center px-2 py-2">
+                <span className="font-semibold">Total</span>
+                <div className="flex items-center gap-2 text-right">
+                  <span className="font-bold">
+                    {expenses.reduce((sum, exp) => sum + exp.amount, 0)} INR
+                  </span>
+                  <div className="w-5 h-5 opacity-0"></div>{" "}
+                  {/* Invisible dummy for alignment */}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
