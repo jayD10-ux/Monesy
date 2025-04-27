@@ -7,7 +7,7 @@ function ExpenseTracker() {
   const [amount, setAmount] = useState("");
   const [expenses, setExpenses] = useState([]);
   const ghostRef = useRef(null);
-  const [inputWidth, setInputWidth] = useState(60); // Initial width
+  const [inputWidth, setInputWidth] = useState(60);
   const [titleisFocused, setTitleIsFocused] = useState(false);
   const [amountisFocused, setAmountIsFocused] = useState(false);
 
@@ -36,7 +36,6 @@ function ExpenseTracker() {
 
   return (
     <div className="p-8 w-full max-w-md mx-auto flex flex-col items-center mb-8">
-
       {/* Title input */}
       <input
         type="text"
@@ -54,25 +53,30 @@ function ExpenseTracker() {
       </div>
 
       {/* Amount input + INR + Add button */}
-      <div className="flex items-center justify-center mt-4 mb-4">
-        <motion.input
-          type="number"
-          placeholder={amountisFocused ? "" : "0"}
-          onFocus={() => setAmountIsFocused(true)}
-          onBlur={() => setAmountIsFocused(false)}
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="text-6xl font-bold text-center outline-none bg-transparent px-1"
-          animate={{
-            width: inputWidth,
-          }}
-          initial={false}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          style={{ minWidth: 60 }}
-        />
-
-        {/* INR Label */}
-        <span className="text-sm font-medium text-gray-400 ml-2">INR</span>
+      <div className="flex items-center justify-center mt-2 mb-6">
+        <motion.div
+          key={amount}
+          initial={{ scale: 0.95, opacity: 0, filter: "blur(10px)" }}
+          animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+          className="flex items-center"
+        >
+          <motion.input
+            type="number"
+            placeholder={amountisFocused ? "" : "0"}
+            onFocus={() => setAmountIsFocused(true)}
+            onBlur={() => setAmountIsFocused(false)}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className="text-6xl font-bold text-center outline-none bg-transparent px-1"
+            animate={{ width: inputWidth }}
+            initial={false}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            style={{ minWidth: 60 }}
+          />
+          <span className="text-sm font-medium text-gray-400 ml-2">INR</span>
+        </motion.div>
 
         {/* Add Button */}
         <AnimatePresence>
@@ -99,20 +103,14 @@ function ExpenseTracker() {
             <motion.div
               key={exp.id}
               layout
-              // layoutTransition={{ type: "spring", stiffness: 500, damping: 30 }}
               initial={{ opacity: 0, y: -15, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-              whileHover={{
-                scale: 1.02,
-                y: -2,
-                transition: { duration: 0.1, ease: "easeOut" },
-              }}
+              whileHover={{ scale: 1.02, y: -2, transition: { duration: 0.1, ease: "easeOut" } }}
               transition={{ duration: 0.3 }}
               className="flex justify-between items-center px-2 group hover:bg-gray-200 transition duration-300 rounded-lg p-2"
             >
               <span>{exp.title}</span>
-
               <div className="flex items-center gap-2 text-right">
                 <span>{exp.amount} INR</span>
                 <button
@@ -125,6 +123,8 @@ function ExpenseTracker() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Total */}
         <AnimatePresence>
           {expenses.length > 1 && (
             <motion.div
@@ -143,8 +143,7 @@ function ExpenseTracker() {
                   <span className="font-bold">
                     {expenses.reduce((sum, exp) => sum + exp.amount, 0)} INR
                   </span>
-                  <div className="w-5 h-5 opacity-0"></div>{" "}
-                  {/* Invisible dummy for alignment */}
+                  <div className="w-5 h-5 opacity-0"></div>  {/* Invisible dummy for alignment */}
                 </div>
               </div>
             </motion.div>
