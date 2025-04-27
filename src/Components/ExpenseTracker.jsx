@@ -8,6 +8,8 @@ function ExpenseTracker() {
   const [expenses, setExpenses] = useState([]);
   const ghostRef = useRef(null);
   const [inputWidth, setInputWidth] = useState(60); // Initial width
+  const [titleisFocused, setTitleIsFocused] = useState(false);
+  const [amountisFocused, setAmountIsFocused] = useState(false);
 
   useEffect(() => {
     if (ghostRef.current) {
@@ -37,10 +39,12 @@ function ExpenseTracker() {
       {/* Title input */}
       <input
         type="text"
-        placeholder="Expense Title"
+        placeholder={titleisFocused ? "" : "Expense Title"}
         value={title}
+        onFocus={() => setTitleIsFocused(true)}
+        onBlur={() => setTitleIsFocused(false)}
         onChange={(e) => setTitle(e.target.value)}
-        className="bg-transparent w-full outline-none text-center text-gray-500 placeholder-gray-400 text-sm"
+        className="bg-transparent w-full outline-none text-center text-black placeholder-gray-400 text-sm font-medium"
       />
 
       {/* Ghost span (measuring number width) */}
@@ -52,7 +56,9 @@ function ExpenseTracker() {
       <div className="flex items-center justify-center">
         <motion.input
           type="number"
-          placeholder="0"
+          placeholder={amountisFocused ? "" : "0"}
+          onFocus={() => setAmountIsFocused(true)}
+          onBlur={() => setAmountIsFocused(false)}
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           className="text-6xl font-bold text-center outline-none bg-transparent px-1"
@@ -91,8 +97,8 @@ function ExpenseTracker() {
           {expenses.map((exp) => (
             <motion.div
               key={exp.id}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter : "blur(0px)"}}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.3 }}
               className="flex justify-between items-center px-2 group hover:bg-gray-200 transition duration-300 rounded-lg p-2"
