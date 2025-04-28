@@ -57,7 +57,7 @@ function ExpenseTracker() {
   };
 
   return (
-    <div className="p-8 w-full max-w-md mx-auto flex flex-col items-center mb-8">
+    <div className="p-8 w-full max-w-md mx-auto flex flex-col items-center mb-8"> 
 
       {/* Title input */}
       <input
