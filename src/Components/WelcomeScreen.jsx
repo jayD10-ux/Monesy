@@ -1,9 +1,14 @@
-// src/Components/WelcomeScreen.jsx
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { setGuest } from "../storage"; // <-- add this import
 
 function WelcomeScreen() {
   const navigate = useNavigate();
+
+  const handleGuest = () => {
+    setGuest();               // <- Save guest userType first
+    navigate("/dashboard");    // <- Then navigate
+  };
 
   return (
     <div className="p-8 w-full max-w-md mx-auto flex flex-col items-center mb-8">
@@ -46,7 +51,7 @@ function WelcomeScreen() {
         </motion.button>
 
         <motion.button
-          onClick={() => navigate("/dashboard")}
+          onClick={handleGuest} // <-- updated
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="w-full py-3 bg-gray-300 text-black font-semibold rounded-lg transition duration-300"
