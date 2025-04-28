@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import * as storage from "../storage"; // added storage import
 
 function ExpenseTracker() {
   const [title, setTitle] = useState("");
@@ -12,11 +13,24 @@ function ExpenseTracker() {
   const [titleIsFocused, setTitleIsFocused] = useState(false);
   const [amountisFocused, setAmountIsFocused] = useState(false);
 
+  // Load expenses from storage when component mounts
+  useEffect(() => {
+    const savedExpenses = storage.getExpenses();
+    if (savedExpenses.length > 0) {
+      setExpenses(savedExpenses);
+    }
+  }, []);
+
+  // Save expenses to storage whenever expenses change
+  useEffect(() => {
+    storage.saveExpenses(expenses);
+  }, [expenses]);
+
   useEffect(() => {
     const target = parseFloat(amount) || 0;
     let start = displayAmount;
-    const duration = 300; // ms
-    const frameRate = 1000 / 60; // 60 FPS
+    const duration = 300;
+    const frameRate = 1000 / 60;
     const totalFrames = duration / frameRate;
     let currentFrame = 0;
 
@@ -58,7 +72,6 @@ function ExpenseTracker() {
 
   return (
     <div className="p-8 w-full max-w-md mx-auto flex flex-col items-center mb-8"> 
-
       {/* Title input */}
       <input
         type="text"
@@ -90,8 +103,6 @@ function ExpenseTracker() {
           initial={false}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
         />
-
-        {/* INR Label */}
         <span className="text-sm font-medium text-gray-400 ml-2">INR</span>
 
         {/* Add Button */}
