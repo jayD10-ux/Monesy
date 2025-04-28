@@ -62,7 +62,7 @@ function ExpenseTracker() {
       {/* Title input */}
       <input
         type="text"
-        placeholder={titleisFocused ? "" : "Expense Title"}
+        placeholder={titleIsFocused ? "" : "Expense Title"}
         value={title}
         onFocus={() => setTitleIsFocused(true)}
         onBlur={() => setTitleIsFocused(false)}
