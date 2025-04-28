@@ -1,6 +1,6 @@
 import ExpenseTracker from "./Components/ExpenseTracker";
 import WelcomeScreen from "./Components/WelcomeScreen";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { getUserType } from "./storage";
 
 function App() {
