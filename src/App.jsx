@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import WelcomeScreen from "./Components/WelcomeScreen";
 import ExpenseTracker from "./Components/ExpenseTracker";
+import PassphraseSignup from "./Components/PassphraseSignup"; 
 
 function App() {
   return (
@@ -8,6 +9,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<WelcomeScreen />} />
+          <Route path="/signup" element={<PassphraseSignup />} />
+          {/* Placeholder for login route */}
           <Route path="/dashboard" element={<ExpenseTracker />} />
           {/* If any unknown route, redirect to Welcome */}
           <Route path="*" element={<Navigate to="/" />} />
