@@ -1,36 +1,63 @@
+// src/Components/WelcomeScreen.jsx
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 function WelcomeScreen() {
   const navigate = useNavigate();
 
-  const handleGuest = () => {
-    navigate("/dashboard");
-  };
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-3xl font-bold mb-6">Welcome to Monesy</h1>
+    <div className="p-8 w-full max-w-md mx-auto flex flex-col items-center mb-8">
 
-      <button
-        onClick={() => alert("Login coming soon")}
-        className="mb-4 px-6 py-2 bg-blue-500 text-white rounded"
+      {/* Title */}
+      <motion.h1
+        initial={{ opacity: 0, y: -20, filter: "blur(4px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.4 }}
+        className="text-4xl font-bold text-center mb-8"
       >
-        Login with Passphrase
-      </button>
+        Welcome to Monesy
+      </motion.h1>
 
-      <button
-        onClick={() => alert("Signup coming soon")}
-        className="mb-4 px-6 py-2 bg-green-500 text-white rounded"
-      >
-        Sign Up (New Passphrase)
-      </button>
+      {/* Buttons */}
+      <div className="flex flex-col space-y-4 w-full">
 
-      <button
-        onClick={handleGuest}
-        className="px-6 py-2 bg-gray-500 text-white rounded"
-      >
-        Continue as Guest
-      </button>
+        <motion.button
+          onClick={() => navigate("/signup")}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full py-3 bg-black text-white font-semibold rounded-lg transition duration-300"
+          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
+          Sign Up with Passphrase
+        </motion.button>
+
+        <motion.button
+          onClick={() => navigate("/login")}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full py-3 bg-gray-700 text-white font-semibold rounded-lg transition duration-300"
+          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
+          Login with Passphrase
+        </motion.button>
+
+        <motion.button
+          onClick={() => navigate("/dashboard")}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full py-3 bg-gray-300 text-black font-semibold rounded-lg transition duration-300"
+          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+        >
+          Continue as Guest
+        </motion.button>
+
+      </div>
     </div>
   );
 }
