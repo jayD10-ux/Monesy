@@ -9,7 +9,7 @@ function ExpenseTracker() {
   const [expenses, setExpenses] = useState([]);
   const ghostRef = useRef(null);
   const [inputWidth, setInputWidth] = useState(60);
-  const [titleisFocused, setTitleIsFocused] = useState(false);
+  const [titleIsFocused, setTitleIsFocused] = useState(false);
   const [amountisFocused, setAmountIsFocused] = useState(false);
 
   useEffect(() => {
