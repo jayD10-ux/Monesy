@@ -3,6 +3,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as storage from "../storage"; // added storage import
 
+
 function ExpenseTracker() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
