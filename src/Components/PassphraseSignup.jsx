@@ -9,6 +9,8 @@ const words = [
 function PassphraseSignup() {
   const [passphrase, setPassphrase] = useState("");
   const navigate = useNavigate();
+  const [copied, setCopied] = useState(false);
+  
 
   useEffect(() => {
     const randomWords = [];
@@ -18,6 +20,16 @@ function PassphraseSignup() {
     }
     setPassphrase(randomWords.join(" — "));
   }, []);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(passphrase);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Reset "Copied!" after 2 sec
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
 
   const handleSave = () => {
     // We'll connect saving later
@@ -43,6 +55,16 @@ function PassphraseSignup() {
       >
         {passphrase}
       </motion.div>
+
+      {/* Copy Button */}
+      <motion.button
+        onClick={handleCopy}
+        className="mb-8 bg-gray-300 text-black px-4 py-2 rounded-full text-sm font-medium"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {copied ? "Copied!" : "Copy Passphrase"}
+      </motion.button>
 
       <motion.button
         onClick={handleSave}
