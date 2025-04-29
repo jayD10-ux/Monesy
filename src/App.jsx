@@ -1,5 +1,7 @@
 import ExpenseTracker from "./Components/ExpenseTracker";
 import WelcomeScreen from "./Components/WelcomeScreen";
+import PassphraseSignup from "./Components/PassphraseSignup";
+import PassphraseLogin from "./Components/PassphraseLogin";
 import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { getUserType } from "./storage";
 
@@ -20,6 +22,8 @@ function App() {
             <>
               {/* Otherwise show Welcome/Login/Signup screens */}
               <Route path="/" element={<WelcomeScreen />} />
+              <Route path="/signup" element={<PassphraseSignup />} />
+              <Route path="/login" element={<PassphraseLogin />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
           )}
